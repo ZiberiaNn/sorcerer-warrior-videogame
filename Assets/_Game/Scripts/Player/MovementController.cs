@@ -10,7 +10,7 @@ public class MovementController : MonoBehaviour
     public float rotationSpeed = 10f;
     public Transform groundCheck;
     public LayerMask ground;
-    public Animator playerAnim;
+    public AnimationController playerAnim;
 
     private Vector2 moveInputVector;
     private Rigidbody rigidBody;
@@ -25,7 +25,7 @@ public class MovementController : MonoBehaviour
 
     private void Start()
     {
-        playerAnim = GetComponent<Animator>();
+        playerAnim = GetComponent<AnimationController>();
     }
     void Awake()
     {
@@ -49,13 +49,13 @@ public class MovementController : MonoBehaviour
         moveVector.y = rigidBody.velocity.y;
 
         rigidBody.velocity = moveVector;
-        if (moveInputVector != Vector2.zero)
+        if (moveInputVector != Vector2.zero & playerAnim.isRunning == false)
         {
-            playerAnim.SetBool("isRunning", true);
+            playerAnim.RunAnim();
         }
         else
         {
-            playerAnim.SetBool("isRunning", false);
+            playerAnim.StopRun();
         }
     }
 
@@ -75,7 +75,7 @@ public class MovementController : MonoBehaviour
         if (isGrounded)
         {
             rigidBody.velocity = new Vector3(moveInputVector.x * moveSpeed, jumpForce);
-            playerAnim.SetBool("isJumping",true);
+            //playerAnim.SetBool("isJumping",true);
             //canDoubleJump = true;
         }
         //else if (canDoubleJump)
@@ -89,10 +89,10 @@ public class MovementController : MonoBehaviour
     {
         if (rigidBody.velocity.y<0 && !isGrounded)
         {
-            playerAnim.SetBool("isFalling", true);
+            //playerAnim.SetBool("isFalling", true);
             return true;
         }
-        playerAnim.SetBool("isFalling", false);
+        //playerAnim.SetBool("isFalling", false);
         return false;
     }
 
@@ -101,13 +101,13 @@ public class MovementController : MonoBehaviour
         if(Physics.CheckSphere(groundCheck.position, .1f, ground))
         {
             isGrounded = true;
-            playerAnim.SetBool("isJumping", false);
-            playerAnim.SetBool("isGrounded", true);
+            //playerAnim.SetBool("isJumping", false);
+            //playerAnim.SetBool("isGrounded", true);
         }
         else
         {
             isGrounded = false;
-            playerAnim.SetBool("isGrounded", false);
+            //playerAnim.SetBool("isGrounded", false);
         }
     }
 

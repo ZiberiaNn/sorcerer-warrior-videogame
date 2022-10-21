@@ -79,10 +79,7 @@ public class PlayerInputController : MonoBehaviour
         {
             if (GetComponent<SpellController>().CooldownTime()<=0)
             {
-                //rb.constraints = RigidbodyConstraints.FreezeAll;
-                //playerAnim.AttackAnimation();
                 GetComponent<SpellController>().Shoot();
-                //Invoke("playerAnim.FinishAttack()", 2f);
             }
             GetComponent<SpellController>().EnableIndicator(false);
         }

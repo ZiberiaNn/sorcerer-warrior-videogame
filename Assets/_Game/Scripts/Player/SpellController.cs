@@ -17,12 +17,17 @@ public class SpellController : MonoBehaviour
 
     private float cycleTime;
 
+    private AnimationController playerAnim;
+    private Rigidbody rb;
+
 
     void Start()
     {
         if (spellIndicatorImage != null) {
             spellIndicatorImage.enabled = false;
         }
+        playerAnim = GetComponent<AnimationController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -45,7 +50,13 @@ public class SpellController : MonoBehaviour
 
     public void Shoot()
     {
-        if (CooldownTime()<=0)
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        playerAnim.CastAnimation();
+    }
+
+    private void CreateFire()
+    {
+        if (CooldownTime() <= 0)
         {
             Vector3 originPosition = originPoint.position;
             GameObject spellBall = Instantiate(spellBallPrefab, originPosition, transform.rotation);
